@@ -1,6 +1,7 @@
 package com.example.librarymanagementsystem.Entities;
 
 import com.example.librarymanagementsystem.Enums.CardStatus;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +17,7 @@ import lombok.Setter;
 public class LibraryCard {
     @Id
     private Integer cardId;
+    @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private CardStatus cardStatus;
     private int noOfBooksIssued;
