@@ -22,4 +22,8 @@ public class LibraryCard {
     private CardStatus cardStatus;
     private int noOfBooksIssued;
 
+    @JoinColumn
+    @OneToOne
+    private Student student;
+
 }

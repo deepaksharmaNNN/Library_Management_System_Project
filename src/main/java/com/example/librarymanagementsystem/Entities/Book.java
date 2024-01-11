@@ -7,7 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Entity
+@Table
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -26,5 +29,12 @@ public class Book {
     private int noOfPages;
 
     private int price;
+
+    private Date publishDate;
+
+    @JoinColumn //(referencedColumnName = "emailId")
+    @ManyToOne
+    private Author author;
+
 
 }
