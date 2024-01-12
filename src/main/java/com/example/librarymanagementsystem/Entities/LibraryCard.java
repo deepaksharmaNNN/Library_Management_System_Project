@@ -16,10 +16,14 @@ import lombok.Setter;
 @AllArgsConstructor
 public class LibraryCard {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer cardId;
+
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
+
     private CardStatus cardStatus;
+
     private int noOfBooksIssued;
 
     @JoinColumn
