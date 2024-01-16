@@ -20,6 +20,6 @@ public class Author {
     private String authorName;
 
     private int authorAge;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String emailId;
 }

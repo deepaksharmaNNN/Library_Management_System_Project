@@ -43,7 +43,7 @@ public class CardService {
         libraryCard.setStudent(student);
         libraryCard.setNoOfBooksIssued(0);
         cardRepository.save(libraryCard);
-        return "Done";
+        return "Card with cardId "+cardId+" and student with studentId "+studentId+" is associated";
 
     }
 }
