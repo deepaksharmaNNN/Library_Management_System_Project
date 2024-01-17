@@ -20,5 +20,11 @@ public class Student {
     private String branch;
     private double cgpa;
     private String phoneNo;
+    /*
+        mappedBy contains the value of Variable Name : foreign key variable name
+        in the child table
+    */
+    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
+    private LibraryCard libraryCard;
 
 }
