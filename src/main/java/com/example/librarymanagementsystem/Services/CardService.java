@@ -27,13 +27,16 @@ public class CardService {
         return "New card with card no "+savedCard.getCardId()+" has been generated";
     }
     public String associateCardAndStudent(AssociationCardStudentRequest associationCardStudentRequest) throws Exception{
-        Optional<LibraryCard> optionalLibraryCard = cardRepository.findById(associationCardStudentRequest.getCardId());
+        Integer cardId = associationCardStudentRequest.getCardId();
+        Integer studentId = associationCardStudentRequest.getStudentId();
+
+        Optional<LibraryCard> optionalLibraryCard = cardRepository.findById(cardId);
         if(optionalLibraryCard.isEmpty()){
             throw new Exception("Invalid Card Id Entered !");
         }
         LibraryCard libraryCard = optionalLibraryCard.get();
 
-        Optional<Student> optionalStudent = studentRepository.findById(associationCardStudentRequest.getStudentId());
+        Optional<Student> optionalStudent = studentRepository.findById(studentId);
         if(optionalStudent.isEmpty()){
             throw new Exception("No student with the given id exits !");
         }
