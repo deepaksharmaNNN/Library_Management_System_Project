@@ -9,5 +9,4 @@ public class AddAuthorRequest {
     private String authorName;
     private int authorAge;
     private String emailId;
-    private int noOfBookWritten;
 }
