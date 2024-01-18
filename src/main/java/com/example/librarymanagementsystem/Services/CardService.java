@@ -5,6 +5,7 @@ import com.example.librarymanagementsystem.Entities.Student;
 import com.example.librarymanagementsystem.Enums.CardStatus;
 import com.example.librarymanagementsystem.Repository.CardRepository;
 import com.example.librarymanagementsystem.Repository.StudentRepository;
+import com.example.librarymanagementsystem.RequestDtos.AssociationCardStudentRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,14 +26,14 @@ public class CardService {
         LibraryCard savedCard = cardRepository.save(newCard);
         return "New card with card no "+savedCard.getCardId()+" has been generated";
     }
-    public String associateCardAndStudent(Integer studentId, Integer cardId) throws Exception{
-        Optional<LibraryCard> optionalLibraryCard = cardRepository.findById(cardId);
+    public String associateCardAndStudent(AssociationCardStudentRequest associationCardStudentRequest) throws Exception{
+        Optional<LibraryCard> optionalLibraryCard = cardRepository.findById(associationCardStudentRequest.getCardId());
         if(optionalLibraryCard.isEmpty()){
             throw new Exception("Invalid Card Id Entered !");
         }
         LibraryCard libraryCard = optionalLibraryCard.get();
 
-        Optional<Student> optionalStudent = studentRepository.findById(studentId);
+        Optional<Student> optionalStudent = studentRepository.findById(associationCardStudentRequest.getStudentId());
         if(optionalStudent.isEmpty()){
             throw new Exception("No student with the given id exits !");
         }

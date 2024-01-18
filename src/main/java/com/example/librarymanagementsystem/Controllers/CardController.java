@@ -1,5 +1,6 @@
 package com.example.librarymanagementsystem.Controllers;
 
+import com.example.librarymanagementsystem.RequestDtos.AssociationCardStudentRequest;
 import com.example.librarymanagementsystem.Services.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,9 +17,9 @@ public class CardController {
         return cardService.getFreshCard();
     }
     @PutMapping("/associateCardAndStudent")
-    public ResponseEntity<String> associateCardAndStudent(@RequestParam("studentId") Integer studentId, @RequestParam("cardId") Integer cardId){
+    public ResponseEntity<String> associateCardAndStudent(@RequestBody AssociationCardStudentRequest associationCardStudentRequest){
         try {
-            String result = cardService.associateCardAndStudent(studentId, cardId);
+            String result = cardService.associateCardAndStudent(associationCardStudentRequest);
             return new ResponseEntity<>(result, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
