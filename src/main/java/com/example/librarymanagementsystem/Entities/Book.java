@@ -34,6 +34,8 @@ public class Book {
 
     private Date publishDate;
 
+    private Boolean isAvailable;
+
     @JoinColumn //(referencedColumnName = "emailId")
     @ManyToOne
     private Author author;

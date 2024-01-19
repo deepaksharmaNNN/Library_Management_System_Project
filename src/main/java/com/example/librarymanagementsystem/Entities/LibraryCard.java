@@ -19,6 +19,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LibraryCard {
+    public static final Integer MAX_NO_OF_ALLOWED_BOOKS = 3;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer cardId;
