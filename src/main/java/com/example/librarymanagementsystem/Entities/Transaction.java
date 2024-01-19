@@ -27,4 +27,8 @@ public class Transaction {
     @JoinColumn
     @ManyToOne
     private LibraryCard libraryCard;
+
+    @JoinColumn
+    @ManyToOne
+    private Book book;
 }

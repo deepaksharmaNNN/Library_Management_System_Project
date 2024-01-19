@@ -7,7 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table
@@ -35,6 +37,9 @@ public class Book {
     @JoinColumn //(referencedColumnName = "emailId")
     @ManyToOne
     private Author author;
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    public List<Transaction> transactionList = new ArrayList<>();
 
     public Book(String bookName, Genre bookGenre, int noOfPages, int price, Date publishDate) {
         this.bookName = bookName;
