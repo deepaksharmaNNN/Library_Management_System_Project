@@ -1,6 +1,7 @@
 package com.example.librarymanagementsystem.Entities;
 
 import com.example.librarymanagementsystem.Enums.TransactionStatus;
+import com.example.librarymanagementsystem.Enums.TransactionType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +24,7 @@ public class Transaction {
     private Date createdOn;
 
     private int fineAmount;
+    private TransactionType transactionType;
 
     @JoinColumn
     @ManyToOne

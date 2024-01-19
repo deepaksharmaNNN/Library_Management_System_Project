@@ -4,6 +4,7 @@ import com.example.librarymanagementsystem.Entities.Book;
 import com.example.librarymanagementsystem.Entities.LibraryCard;
 import com.example.librarymanagementsystem.Entities.Transaction;
 import com.example.librarymanagementsystem.Enums.TransactionStatus;
+import com.example.librarymanagementsystem.Enums.TransactionType;
 import com.example.librarymanagementsystem.Repository.BookRepository;
 import com.example.librarymanagementsystem.Repository.CardRepository;
 import com.example.librarymanagementsystem.Repository.TransactionRepository;
@@ -37,5 +38,11 @@ public class TransactionService {
 
         Transaction transaction = new Transaction();
         transaction.setTransactionStatus(TransactionStatus.SUCCESS);
+        transaction.setTransactionType(TransactionType.ISSUED);
+
+        //update book and card status
+        book.setIsAvailable(Boolean.FALSE);
+        libraryCard.setNoOfBooksIssued(libraryCard.getNoOfBooksIssued() + 1);
+
     }
 }
