@@ -11,6 +11,8 @@ import com.example.librarymanagementsystem.Repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class TransactionService {
 
@@ -24,21 +26,39 @@ public class TransactionService {
     private CardRepository cardRepository;
 
 
-    public String addTransaction(Integer bookId, Integer cardId) throws Exception{
+    public String issueBook(Integer bookId, Integer cardId) throws Exception{
+        Transaction transaction = new Transaction();
+        transaction.setTransactionType(TransactionType.ISSUED);
+        transaction.setTransactionStatus(TransactionStatus.ONGOING);
+
         //get book and card Entity from the Db
-        Book book = bookRepository.findById(bookId).get();
-        LibraryCard libraryCard = cardRepository.findById(cardId).get();
+        Optional<Book> bookOptional = bookRepository.findById(bookId);
+        if(bookOptional.isEmpty()){
+            throw new Exception("Book id is invalid");
+        }
+        Optional<LibraryCard> optionalLibraryCard= cardRepository.findById(cardId);
+        if(optionalLibraryCard.isEmpty()){
+            throw new Exception("Card id is invalid");
+        }
+        Book book = bookOptional.get();
+        LibraryCard libraryCard = optionalLibraryCard.get();
+
+
         //check for availability (book and maxAllowedBooks)
         if(book.getIsAvailable() == Boolean.FALSE){
-            throw new Exception("Book with the given bookId is not available");
+            transaction.setTransactionStatus(TransactionStatus.FAILURE);
+            transaction = transactionRepository.save(transaction);
+            throw new Exception("Book with the given bookId is not available, transaction id "+transaction.getTransactionId());
         }
         if(libraryCard.getNoOfBooksIssued() >= LibraryCard.MAX_NO_OF_ALLOWED_BOOKS){
-            throw new Exception("You have reached the max no of allowed books"+"\n"+"Please return previous books to get new one");
+            transaction.setTransactionStatus(TransactionStatus.FAILURE);
+            transaction = transactionRepository.save(transaction);
+            throw new Exception("You have reached the max no of allowed books"+
+                    "\n"+"Please return previous books to get new one "
+                    +"Transaction id "+transaction.getTransactionId());
         }
-
-        Transaction transaction = new Transaction();
+        //being here means all the thing are valid
         transaction.setTransactionStatus(TransactionStatus.SUCCESS);
-        transaction.setTransactionType(TransactionType.ISSUED);
 
         //update book and card status
         book.setIsAvailable(Boolean.FALSE);
