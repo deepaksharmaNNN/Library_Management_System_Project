@@ -5,6 +5,8 @@ import com.example.librarymanagementsystem.Entities.LibraryCard;
 import com.example.librarymanagementsystem.Entities.Transaction;
 import com.example.librarymanagementsystem.Enums.TransactionStatus;
 import com.example.librarymanagementsystem.Enums.TransactionType;
+import com.example.librarymanagementsystem.Exceptions.BookNotFoundException;
+import com.example.librarymanagementsystem.Exceptions.CardNotFoundException;
 import com.example.librarymanagementsystem.Repository.BookRepository;
 import com.example.librarymanagementsystem.Repository.CardRepository;
 import com.example.librarymanagementsystem.Repository.TransactionRepository;
@@ -34,11 +36,11 @@ public class TransactionService {
         //get book and card Entity from the Db
         Optional<Book> bookOptional = bookRepository.findById(bookId);
         if(bookOptional.isEmpty()){
-            throw new Exception("Book id is invalid");
+            throw new BookNotFoundException("Book id is invalid");
         }
         Optional<LibraryCard> optionalLibraryCard= cardRepository.findById(cardId);
         if(optionalLibraryCard.isEmpty()){
-            throw new Exception("Card id is invalid");
+            throw new CardNotFoundException("Card id is invalid");
         }
         Book book = bookOptional.get();
         LibraryCard libraryCard = optionalLibraryCard.get();
