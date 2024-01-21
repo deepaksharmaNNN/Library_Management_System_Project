@@ -5,8 +5,10 @@ import com.example.librarymanagementsystem.Entities.LibraryCard;
 import com.example.librarymanagementsystem.Entities.Transaction;
 import com.example.librarymanagementsystem.Enums.TransactionStatus;
 import com.example.librarymanagementsystem.Enums.TransactionType;
+import com.example.librarymanagementsystem.Exceptions.BookNotAvailableException;
 import com.example.librarymanagementsystem.Exceptions.BookNotFoundException;
 import com.example.librarymanagementsystem.Exceptions.CardNotFoundException;
+import com.example.librarymanagementsystem.Exceptions.MaxLimitReachedException;
 import com.example.librarymanagementsystem.Repository.BookRepository;
 import com.example.librarymanagementsystem.Repository.CardRepository;
 import com.example.librarymanagementsystem.Repository.TransactionRepository;
@@ -50,12 +52,12 @@ public class TransactionService {
         if(book.getIsAvailable() == Boolean.FALSE){
             transaction.setTransactionStatus(TransactionStatus.FAILURE);
             transaction = transactionRepository.save(transaction);
-            throw new Exception("Book with the given bookId is not available, transaction id "+transaction.getTransactionId());
+            throw new BookNotAvailableException("Book with the given bookId is not available, transaction id "+transaction.getTransactionId());
         }
         if(libraryCard.getNoOfBooksIssued() >= LibraryCard.MAX_NO_OF_ALLOWED_BOOKS){
             transaction.setTransactionStatus(TransactionStatus.FAILURE);
             transaction = transactionRepository.save(transaction);
-            throw new Exception("You have reached the max no of allowed books"+
+            throw new MaxLimitReachedException("You have reached the max no of allowed books"+
                     "\n"+"Please return previous books to get new one "
                     +"Transaction id "+transaction.getTransactionId());
         }
