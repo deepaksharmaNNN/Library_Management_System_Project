@@ -68,6 +68,9 @@ public class TransactionService {
         book.setIsAvailable(Boolean.FALSE);
         libraryCard.setNoOfBooksIssued(libraryCard.getNoOfBooksIssued() + 1);
 
+        transaction.setBook(book);
+        transaction.setLibraryCard(libraryCard);
+
         //save the child as it will save the parent(cascade)
         transaction = transactionRepository.save(transaction);
         return "The transaction with the TransactionId "+transaction.getTransactionId()+" has been saved to Db";
