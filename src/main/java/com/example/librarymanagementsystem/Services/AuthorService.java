@@ -25,4 +25,10 @@ public class AuthorService {
         javaMailSender.send(message);
         return "Author with authorId "+newAuthor.getAuthorId()+" has been added to Db";
     }
+
+    public Author findAuthorById(Integer authorId){
+        return authorRepository.findById(authorId).orElse(null);
+    }
+
+
 }
